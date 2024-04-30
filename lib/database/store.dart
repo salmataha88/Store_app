@@ -3,16 +3,18 @@
 class Store {
   int? id;
   final String name;
+  final String address;
   final double latitude;
   final double longitude;
 
-  Store({this.id, required this.name, required this.latitude, required this.longitude});
+  Store({this.id, required this.name,required this.address, required this.latitude, required this.longitude});
 
   // Factory constructor to convert a Map to a Store object
   factory Store.fromMap(Map<String, dynamic> map) {
     return Store(
       id: map['id'],
       name: map['name'],
+      address: map['address'],
       latitude: map['latitude'],
       longitude: map['longitude'],
     );
@@ -23,6 +25,7 @@ class Store {
     return {
       'id': id,
       'name': name,
+      'address': address,
       'latitude': latitude,
       'longitude': longitude,
     };
