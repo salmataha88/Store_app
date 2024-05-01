@@ -49,65 +49,63 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Add Store'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: Container(
-              height: 300, // Specify the height of the map container
-              child: GoogleMap(
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(26.8206, 30.8025), // Egypt coordinates
-                  zoom: 6, // Adjust the zoom level as needed
-                ),
-                onTap: (LatLng latLng) {
-                  setState(() {
-                    _selectedLocation = latLng;
-                  });
-                },
-                markers: _selectedLocation != null
-                  ? {
-                      Marker(
-                        markerId: const MarkerId('selected-location'),
-                        position: _selectedLocation!,
-                      ),
-                    }
-                  : {},
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text('Add Store'),
+    ),
+    body: ListView(
+      shrinkWrap: true,
+      children: [
+        Container(
+          height: 500, // Specify the height of the map container
+          child: GoogleMap(
+            initialCameraPosition: const CameraPosition(
+              target: LatLng(26.8206, 30.8025), // Egypt coordinates
+              zoom: 6, // Adjust the zoom level as needed
+            ),
+            onTap: (LatLng latLng) {
+              setState(() {
+                _selectedLocation = latLng;
+              });
+            },
+            markers: _selectedLocation != null
+                ? {
+              Marker(
+                markerId: const MarkerId('selected-location'),
+                position: _selectedLocation!,
               ),
-            ),
+            }
+                : {},
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Store Name'),
-                ),
-                SizedBox(height: 16), // Add spacing between the text fields
-                TextField(
-                  controller: _addressController,
-                  decoration: const InputDecoration(labelText: 'Address'),
-                ),
-              ],
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(labelText: 'Store Name'),
+              ),
+              const SizedBox(height: 16), // Add some spacing between the text fields
+              TextField(
+                controller: _addressController,
+                decoration: const InputDecoration(labelText: 'Address'),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: ElevatedButton(
-              onPressed: () => _addStore(context),
-              child: const Text('Add Store'),
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: ElevatedButton(
+            onPressed: () => _addStore(context),
+            child: const Text('Add Store'),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
 }

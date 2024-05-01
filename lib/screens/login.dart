@@ -39,7 +39,7 @@ class _LoginPageState extends State<loginPage> {
           if (email == 'salma@gmail.com') {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AddStoreScreen()),
+              MaterialPageRoute(builder: (context) => const AddStoreScreen()),
             );
           } else {
             Navigator.pushReplacement(
