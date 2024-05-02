@@ -84,5 +84,26 @@ class DatabaseHelper {
     print(users.first);
     return users.isNotEmpty ? users.first : null;
   }
+
+  Future<bool> isEmailExists(String email) async {
+    final db = await instance.database;
+    var res = await db.query('users', where: 'email = ?', whereArgs: [email]);
+    return res.isNotEmpty;
+  }
+
+   Future<void> updateUserPhoto(String email, List<int> favoriteStores) async {
+    try {
+      Database db = await instance.database;
+      int rowsAffected = await db.update(
+        'users',
+        {'favoriteStores': favoriteStores},
+        where: 'email = ?',
+        whereArgs: [email],
+      );
+      print('Updated $rowsAffected rows');
+    } catch (e) {
+      print('Error updating user photo: $e');
+    }
+  }
 }
 

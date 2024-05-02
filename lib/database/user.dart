@@ -1,12 +1,10 @@
-import 'store.dart';
-
 class User {
   int? id;
   final String email;
   final String password;
   final double latitude;
   final double longitude;
-  List<Store> favoriteStores;
+  List<int> favoriteStores; // Change the type to List<int>
 
   User({
     this.id,
@@ -14,17 +12,17 @@ class User {
     required this.password,
     required this.latitude,
     required this.longitude,
-    List<Store>? favoriteStores,
+    List<int>? favoriteStores, // Update the parameter type
   }) : favoriteStores = favoriteStores ?? [];
 
   // Method to add a store to favorite stores
-  void addToFavorites(Store store) {
-    favoriteStores.add(store);
+  void addToFavorites(int storeId) { // Update the parameter type
+    favoriteStores.add(storeId); // No need to access store.id directly
   }
 
   // Method to remove a store from favorite stores
-  void removeFromFavorites(Store store) {
-    favoriteStores.removeWhere((s) => s.id == store.id);
+  void removeFromFavorites(int storeId) { // Update the parameter type
+    favoriteStores.remove(storeId); // Use remove method with the integer id
   }
 
   // Method to convert a User object to a Map
@@ -35,7 +33,7 @@ class User {
       'password': password,
       'latitude': latitude,
       'longitude': longitude,
-      'favoriteStores': favoriteStores.map((store) => store.toMap()).toList(),
+      'favoriteStores': favoriteStores,
     };
   }
 
@@ -47,7 +45,7 @@ class User {
       password: map['password'],
       latitude: map['latitude'],
       longitude: map['longitude'],
-      favoriteStores: List<Store>.from(map['favoriteStores'].map((store) => Store.fromMap(store))),
+      favoriteStores: List<int>.from(map['favoriteStores']), // Update the type conversion
     );
   }
 }
