@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../database/store.dart';
+import '../database/user.dart';
 import '../helper/bottom_navbar.dart';
+import '../helper/databaseHelper.dart';
 import '../helper/storeProvider.dart';
 
 class AddFavStores extends StatelessWidget {
   String userEmail;
-  AddFavStores({super.key, required this.userEmail});
+  AddFavStores({required this.userEmail});
   
 
   @override
@@ -51,18 +53,30 @@ class AddFavStores extends StatelessWidget {
           }
         },
       ),
-      bottomNavigationBar: const BottomNavBar(),
+      bottomNavigationBar:  BottomNavBar(userEmail : userEmail),
     );
   }
 
-  void _addToFavorites(BuildContext context, Store store) {
-    // Implement functionality to add the store to favorites
-    // For example:
-    // favoriteStoreProvider.addFavoriteStore(store);
-    
-    // Show a snackbar indicating that the store has been added to favorites
+  void _addToFavorites(BuildContext context, Store store) async {
+  User? user = (await DatabaseHelper.instance.getUserByEmail(userEmail)) as User?;
+  if (user != null) {
+    if (user.favoriteStores.contains(store.id)) {
+      user.removeFromFavorites(store.id!);
+    } else {
+      user.addToFavorites(store.id!);
+    }
+    await DatabaseHelper.instance.updateFavoriteStores(user.email, user.favoriteStores);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Added to favorites: ${store.name}')),
+      SnackBar(
+        content: user.favoriteStores.contains(store.id)
+            ? const Text('Removed from Favorites')
+            : const Text('Added to Favorites'),
+        duration: const Duration(seconds: 1),
+      ),
     );
   }
+}
+
+
+
 }

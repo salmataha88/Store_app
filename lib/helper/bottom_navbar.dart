@@ -3,8 +3,8 @@ import 'package:app2/screens/addStore.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatelessWidget {
-
-  const BottomNavBar({super.key});
+ String userEmail;
+  BottomNavBar({required this.userEmail});
 
 
   @override
@@ -30,7 +30,7 @@ class BottomNavBar extends StatelessWidget {
               // Navigate to the add store screen
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const AddFavStores() ),
+                MaterialPageRoute(builder: (context) =>  AddFavStores(userEmail : this.userEmail) ),
               );
               break;
             case 1:

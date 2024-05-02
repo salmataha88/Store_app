@@ -7,7 +7,7 @@ import '../helper/storeProvider.dart';
 
 class HomePage extends StatelessWidget {
   String userEmail;
-  const HomePage({super.key , this.userEmail});
+  HomePage({required this.userEmail});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
           }
         },
       ),
-      bottomNavigationBar: const BottomNavBar(),
+      bottomNavigationBar:  BottomNavBar(userEmail : userEmail),
     );
   }
 }

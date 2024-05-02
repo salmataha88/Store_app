@@ -4,7 +4,7 @@ class User {
   final String password;
   final double latitude;
   final double longitude;
-  List<int> favoriteStores; // Change the type to List<int>
+  List<int> favoriteStores;
 
   User({
     this.id,
@@ -12,20 +12,18 @@ class User {
     required this.password,
     required this.latitude,
     required this.longitude,
-    List<int>? favoriteStores, // Update the parameter type
+    List<int>? favoriteStores,
   }) : favoriteStores = favoriteStores ?? [];
 
-  // Method to add a store to favorite stores
-  void addToFavorites(int storeId) { // Update the parameter type
-    favoriteStores.add(storeId); // No need to access store.id directly
+
+  void addToFavorites(int storeId) { 
+    favoriteStores.add(storeId); 
   }
 
-  // Method to remove a store from favorite stores
-  void removeFromFavorites(int storeId) { // Update the parameter type
-    favoriteStores.remove(storeId); // Use remove method with the integer id
+  void removeFromFavorites(int storeId) { 
+    favoriteStores.remove(storeId); 
   }
 
-  // Method to convert a User object to a Map
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -37,7 +35,6 @@ class User {
     };
   }
 
-  // Factory constructor to convert a Map to a User object
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['id'],
@@ -45,7 +42,7 @@ class User {
       password: map['password'],
       latitude: map['latitude'],
       longitude: map['longitude'],
-      favoriteStores: List<int>.from(map['favoriteStores']), // Update the type conversion
+      favoriteStores: List<int>.from(map['favoriteStores']),
     );
   }
 }

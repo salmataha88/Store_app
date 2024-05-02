@@ -91,19 +91,20 @@ class DatabaseHelper {
     return res.isNotEmpty;
   }
 
-   Future<void> updateUserPhoto(String email, List<int> favoriteStores) async {
+  Future<void> updateFavoriteStores(String email, List<int> favoriteStores) async {
     try {
       Database db = await instance.database;
       int rowsAffected = await db.update(
         'users',
-        {'favoriteStores': favoriteStores},
+        {'favoriteStores': favoriteStores.join(',')},
         where: 'email = ?',
         whereArgs: [email],
       );
       print('Updated $rowsAffected rows');
     } catch (e) {
-      print('Error updating user photo: $e');
+      print('Error updating user favorite stores: $e');
     }
   }
+
 }
 
