@@ -29,11 +29,6 @@ class _SignupPageState extends State<SignupPage> {
     if (permission == LocationPermission.denied) {
       throw Exception('User denied permissions to access the device\'s location');
     }
-    
-    if(DatabaseHelper.instance.getUserByEmail(email) != null){
-      showSnackBar(context, 'Email is already found');
-      return;
-    }
 
     if (password != confirmPassword) {
       // Show error message if passwords do not match

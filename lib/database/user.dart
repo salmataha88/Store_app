@@ -15,13 +15,12 @@ class User {
     List<int>? favoriteStores,
   }) : favoriteStores = favoriteStores ?? [];
 
-
-  void addToFavorites(int storeId) { 
-    favoriteStores.add(storeId); 
+  void addToFavorites(int storeId) {
+    favoriteStores.add(storeId);
   }
 
-  void removeFromFavorites(int storeId) { 
-    favoriteStores.remove(storeId); 
+  void removeFromFavorites(int storeId) {
+    favoriteStores.remove(storeId);
   }
 
   Map<String, dynamic> toMap() {
@@ -35,7 +34,7 @@ class User {
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
+  /* factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['id'],
       email: map['email'],
@@ -43,6 +42,23 @@ class User {
       latitude: map['latitude'],
       longitude: map['longitude'],
       favoriteStores: List<int>.from(map['favoriteStores']),
+    );
+  } */
+
+  factory User.fromMap(Map<String, dynamic> map) {
+    List<int> favoriteStores = [];
+    if (map['favoriteStores'] != null) {
+      List<String> storeIds = map['favoriteStores'].split(',');
+      favoriteStores = storeIds.map((id) => int.tryParse(id) ?? 0).toList();
+    }
+
+    return User(
+      id: map['id'],
+      email: map['email'],
+      password: map['password'],
+      latitude: map['latitude'],
+      longitude: map['longitude'],
+      favoriteStores: favoriteStores,
     );
   }
 }

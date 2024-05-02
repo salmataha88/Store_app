@@ -56,10 +56,10 @@ class AddFavStores extends StatelessWidget {
       bottomNavigationBar:  BottomNavBar(userEmail : userEmail),
     );
   }
-
-  void _addToFavorites(BuildContext context, Store store) async {
-  User? user = (await DatabaseHelper.instance.getUserByEmail(userEmail)) as User?;
-  if (user != null) {
+void _addToFavorites(BuildContext context, Store store) async {
+  var userMap = await DatabaseHelper.instance.getUserByEmail(userEmail);
+  if (userMap != null) {
+    var user = User.fromMap(userMap);
     if (user.favoriteStores.contains(store.id)) {
       user.removeFromFavorites(store.id!);
     } else {
@@ -76,6 +76,7 @@ class AddFavStores extends StatelessWidget {
     );
   }
 }
+
 
 
 
