@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../database/store.dart';
+import '../helper/bottom_navbar.dart';
 import '../helper/storeProvider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  String userEmail;
+  HomePage({required this.userEmail});
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,7 @@ class HomePage extends StatelessWidget {
           }
         },
       ),
+      bottomNavigationBar:  BottomNavBar(userEmail : userEmail),
     );
   }
 }

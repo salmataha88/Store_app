@@ -1,5 +1,3 @@
-// store_model.dart
-
 class Store {
   int? id;
   final String name;

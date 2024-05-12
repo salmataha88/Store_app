@@ -27,15 +27,7 @@ class _SignupPageState extends State<SignupPage> {
     LocationPermission permission = await Geolocator.requestPermission();
 
     if (permission == LocationPermission.denied) {
-      // Handle case where user denies location permissions
       throw Exception('User denied permissions to access the device\'s location');
-    }
-
-    // Validate input fields
-    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-      // Show error message if any field is empty
-      showSnackBar(context, 'Please fill in all fields');
-      return;
     }
 
     if (password != confirmPassword) {
