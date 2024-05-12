@@ -1,11 +1,11 @@
-import 'package:app2/screens/addStore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../helper/custom_button.dart';
 import '../helper/custom_textfiled.dart';
 import '../helper/databaseHelper.dart';
 import '../helper/show_snackBar.dart';
-
+import 'homePage.dart';
+import 'addStore.dart';
 
 class loginPage extends StatefulWidget {
   loginPage({Key? key}) : super(key: key);
@@ -20,52 +20,50 @@ class _LoginPageState extends State<loginPage> {
   final passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
 
-
   Future<void> logInSqlite() async {
     setState(() {
       isLoading = true;
     });
-    try {
-      String email = emailController.text.trim();
-      String password = passwordController.text.trim();
 
-      Map<String, dynamic>? userData = await DatabaseHelper.instance.getUserByEmail(email);
+    try {
+      final email = emailController.text.trim();
+      final password = passwordController.text.trim();
+
+      final userData = await DatabaseHelper.instance.getUserByEmail(email);
 
       if (userData != null) {
         if (userData['password'] == password) {
           print('Sign in successful for user ${userData['name']}');
 
-          /* Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => ProfilePage(userEmail: email)),
-          ); */
+          // Navigate to the appropriate screen based on the user's email
+          if (email == 'salma@gmail.com') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddStoreScreen()),
+            );
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          }
 
           emailController.clear();
           passwordController.clear();
-        }
-        else {
+        } else {
           showSnackBar(context, 'Incorrect password');
         }
-        if (email == 'salma@gmail.com') {
-          // Navigate to the add store screen if the user is authorized
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddStoreScreen()),
-          ); 
-        }
-        
       } else {
         showSnackBar(context, 'User not found');
       }
     } catch (e) {
-      showSnackBar(context, 'There was an error');
+      showSnackBar(context, 'Failed to log in. Please try again later.');
     } finally {
       setState(() {
         isLoading = false;
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -93,13 +91,19 @@ class _LoginPageState extends State<loginPage> {
                 obscureText: false,
                 controller: emailController,
                 text: 'Email',
+                
               ),
               const SizedBox(height: 15),
               CustomTextfiled(
                 obscureText: true,
                 controller: passwordController,
                 text: 'Password',
-                
+                /* validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                }, */
               ),
               const SizedBox(height: 15),
               CustomButton(

@@ -40,6 +40,7 @@ class DatabaseHelper {
       CREATE TABLE stores (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
+        address TEXT,
         latitude REAL,
         longitude REAL
       )
