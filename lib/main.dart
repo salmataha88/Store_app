@@ -9,6 +9,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseHelper.instance.database;
 
+  // Initialize and set StoreProvider instance
+  StoreProvider storeProvider = StoreProvider();
+  DatabaseHelper.instance.setStoreProvider(storeProvider);
+
   runApp(MyApp());
 }
 

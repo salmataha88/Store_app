@@ -34,31 +34,21 @@ class User {
     };
   }
 
-  /* factory User.fromMap(Map<String, dynamic> map) {
-    return User(
-      id: map['id'],
-      email: map['email'],
-      password: map['password'],
-      latitude: map['latitude'],
-      longitude: map['longitude'],
-      favoriteStores: List<int>.from(map['favoriteStores']),
-    );
-  } */
+factory User.fromMap(Map<String, dynamic> map) {
+  return User(
+    id: map['id'],
+    email: map['email'],
+    password: map['password'],
+    latitude: map['latitude'],
+    longitude: map['longitude'],
+    favoriteStores: List<int>.from(map['favoriteStores'] ?? []),
+  );
+}
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    List<int> favoriteStores = [];
-    if (map['favoriteStores'] != null) {
-      List<String> storeIds = map['favoriteStores'].split(',');
-      favoriteStores = storeIds.map((id) => int.tryParse(id) ?? 0).toList();
-    }
 
-    return User(
-      id: map['id'],
-      email: map['email'],
-      password: map['password'],
-      latitude: map['latitude'],
-      longitude: map['longitude'],
-      favoriteStores: favoriteStores,
-    );
+@override
+  String toString() {
+    return 'User(id: $id, email: $email, password: $password, latitude: $latitude, longitude: $longitude, favoriteStores: $favoriteStores)';
   }
+
 }
